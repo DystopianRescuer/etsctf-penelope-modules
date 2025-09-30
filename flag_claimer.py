@@ -122,10 +122,6 @@ class claim_flags(Module):
 
         # Checa notificaciones pendientes, usado para ver si las banderas reclamadas han sido validadas
         def check_notifications():
-            if not check_if_active_session():
-                logger.error("No active session")
-                return
-
             endpoint = "/dashboard"
 
             r = web_session.get(ctf_rootpage + endpoint)
