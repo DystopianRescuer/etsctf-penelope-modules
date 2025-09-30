@@ -93,12 +93,6 @@ class claim_flags(Module):
 
         # Reclama la bandera en la plataforma
         def claim(flag: str):
-            if not check_if_active_session():
-                logger.error(
-                    "Sesión inválida, no se pudo cobrar la bandera. Intenta de nuevo."
-                )
-                return
-
             csrf_req = web_session.get(ctf_rootpage + "/dashboard")
             claim_endpoint = "/claim"
             payload = {
