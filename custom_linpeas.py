@@ -214,14 +214,15 @@ class linpeas(Module):
         if arguments.ai:
             try:
                 from openai import OpenAI
+                import json
             except Exception as e:
                 logger.error(e)
                 return False
 
             # check if API key defined in peneloperc
             try:
-                if openia_apikey != None:
-                    api_key = openia_apikey
+                if openai_apikey != None:
+                    api_key = openai_apikey
             except NameError:
                 logger.error(
                     "API Key no definida, definela como openai_apikey en peneloperc"
